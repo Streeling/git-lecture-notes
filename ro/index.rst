@@ -87,3 +87,59 @@ acomoda și veți căuta să utilizați comenzi mult mai complexe.
   - modificarea fișierelor în dosarul de lucru.
   - marcarea fișierelor la care ați lucrat. Această operație va pregati o captură a dosarului
   - efectuarea unui commit a fișierelor marcate. Această operație va stocha captura în depozitul Git.
+  
+Initializarea depozitului de fișiere și setarea programului git
+--------------------------------------------------------------------------------
+
+Există mai multe metode de a inițializa un depozit git. Prima metodă este se 
+utilizează atunci când doriți să inițializați depozitul git pentru un proiect 
+care deja se află pe calculatorul dvs. Pe când a doua metodă - pentru a descărca 
+un depozit git existent (obțiunând în rezultat o copie locală a acestuia).
+
+Pentru a inițializa un proiect noi, în dosarul proiectului, inițializați arhiva 
+git cu ajutorul comenzii::
+
+Dacă sunteți în situația când vi se potrivește prima metodă, atunci treceți în 
+dosarul proiectului și rulați comanda::
+
+  git init
+
+Ca urmare, în dosarul proiectului, se va crea un dosarul ascuns .git, în care se 
+va păstra istoricul tuturor modificărilor operate asupra acestui dosar și a 
+subdosarelor.
+
+A doua metodă presupune utilizarea comenzii::
+
+  git clone https://github.com/git-lectures/git-lecture-notes.git
+
+Această comandă va crea o copie locală a depozitului ce conține  fișierele acestui 
+tutorial.
+
+.. remarcă:: Fiecare depozit trebuie să fie în propriul său dosar. Nu este permisă  
+   crearea sau duplicarea de depozite git înauntrul unui alt depozit git deja existent, 
+   adică în dosarul sau subdosarule în care deja ați inițializat un depozit git. 
+
+Înainte de a purcede mai departe haideți să setăm git-ul. Va trebuie să faceți 
+acest lucru pentru fiecare calculator în parte::
+
+  git config --global
+  git config --global user.name "Numele dvs"
+  git config --global user.email dvs@deomeniuldvs.com``
+  git config --global core.editor vim
+  git config color.ui auto
+
+Opțiunea ``--global`` se utilizează atunci când doriți ca setările să fie la nivel 
+de utilizator. Setările vor fi stocate într-un dosar ascuns în dosarul personal. 
+De asemenea puteți seta fiecare depozit git în parte, scoțînd această opțiune, sau 
+puteți seta pentru întreg sistemul punând în loc de ``--global`` opțiunea ``--system``. 
+De obicei, se setează depozitele la nivel de utilizator și la nivel de sistem.
+
+Puteți verifica care-s setările cu dvs. cu::
+
+  git config --list
+
+Dacă ați setat la diferite nivele veți vedea mai multe înregistrări care se repetă.
+Setarile pentru utilizator au prioritate în raport cu setarile la nivel de sistem și 
+setarile locale au prioritate mai mare în raport cu cele de utilizator.
+
+
