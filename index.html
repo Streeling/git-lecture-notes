@@ -1,0 +1,476 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Git and Github &mdash; Git lecture notes</title>
+    
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '2013.2 beta (euroscipy 2013)',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/copybutton.js"></script>
+    <link rel="top" title="Git lecture notes" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="#">Git lecture notes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="git-and-github">
+<h1>Git and Github<a class="headerlink" href="#git-and-github" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial was made for EuroScipy&#8216;13. It is aimed at researchers, who don&#8217;t
+necessarily know version control. Other EuroScipy tutorials (python based
+tutorials) can be found <a class="reference external" href="http://scipy-lectures.github.io">here</a>.</p>
+<div class="section" id="why-do-i-need-version-control">
+<h2>Why do I need version control?<a class="headerlink" href="#why-do-i-need-version-control" title="Permalink to this headline">¶</a></h2>
+<p>As researchers, you (probably) want:</p>
+<blockquote>
+<div><ul class="simple">
+<li>reproducible research</li>
+<li>fast and efficient research</li>
+</ul>
+</div></blockquote>
+<div class="figure">
+<img alt="_images/Journal-of-Irrproducibe-Research.jpg" src="_images/Journal-of-Irrproducibe-Research.jpg" />
+<p class="caption">The journal of Irreproducible research.</p>
+</div>
+<p>And ideally, you want to avoid this:</p>
+<div class="figure">
+<img alt="_images/version_control.gif" src="_images/version_control.gif" />
+<p class="caption">&#8220;Piled Higher and Deeper&#8221; by Jorge Cham: www.phdcomics.com</p>
+</div>
+<p>Version control systems allow to keep all the historical versions of your
+software for easy tracking. It also benefits team collaboration and mproves
+our efficiency. In addition, it can be used as a data center, making build
+automation and continous integration possible.</p>
+<p>In this tutorial, we are going to learn the basics of Git and Github. First,
+what is Git? Git is a distributed version control software (DCSV). Github is a
+git hosting platform that provide free git repository for all opensource
+softwares. Other well-known DCVS are mercurial and bazaar, with their
+respective hosting platform, bitbucket (which now also supports git
+repository) and launchpad.</p>
+<p>Why did we choose to introduce git, and not mercurial, which is not only build
+with python, but has also been chosen by CPython (and many other python
+project) to host their code. That decision was quite straightforward: in the
+scientific world, git (and github) are much more widely used than mercurial
+(and bitbucket). A scholar.google search yields 14,100 results for a &#8220;github&#8221;
+search, while a &#8220;bitbucket&#8221; search only returns 2,260 results. If that&#8217;s not
+enough to be convinced, here is a table of python packages, divided in two
+list: the github hosted ones, and the bitbucket hosted ones.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Github</th>
+<th class="head">Bitbucket</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Numpy</li>
+<li>Scipy</li>
+<li>IPython</li>
+<li>matplotlib</li>
+<li>Sympy</li>
+<li>Scikit-learn</li>
+<li>Scikit-image</li>
+<li>Numba</li>
+<li>Mayavi</li>
+<li>Traits</li>
+<li>Enable</li>
+<li>Enamel</li>
+<li>Pandas</li>
+<li>biopython</li>
+<li>Cython</li>
+<li>statsmodel</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>PIL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Before we start learning git, please be aware that git is a very powerful
+tool. We will only introduce the basics of Git in this tutorial, and many
+things may seem obscure and you may (will?) struggle with the concepts.
+Yet, after a while using it, we get used to the rough edge, and start using
+more complex commands.</p>
+<p>The basic git workflow is:</p>
+<blockquote>
+<div><ul class="simple">
+<li>modify files in your working directory.</li>
+<li>stage files you&#8217;ve worked on. This prepares a snapshot of the directory</li>
+<li>commit the files you&#8217;ve staged. This stores that snapshot in the Git
+repository.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="initializing-repositories-and-configuring-git">
+<h2>Initializing repositories and configuring git<a class="headerlink" href="#initializing-repositories-and-configuring-git" title="Permalink to this headline">¶</a></h2>
+<p>There are several way to initiliaze a git repository. The first is used to
+initialize git in an existing repository. The second is used to retrieve an
+existing repository.</p>
+<p>To initialize a new project, in the project directory, initialize the git
+repository with:</p>
+<div class="highlight-python"><div class="highlight"><pre>git init
+<div class="newline"></div></pre></div>
+</div>
+<p>This will enable git to keep track of changes in this folder, and subfolders
+by creating a .git hidden folder containing the git skeleton.</p>
+<p>The second way is:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/git-lectures/git-lecture-notes.git
+<div class="newline"></div></pre></div>
+</div>
+<p>This will clone the repository containing the documents of this tutorial.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Each new repository should be in its own directory. One git
+repository should not be created or cloned in an existing git repository,
+ie a folder you&#8217;ve initialized a git repository and its subfolders.</p>
+</div>
+<p>Before continuing let&#8217;s configure git. You will have to do this once per
+computer you use:</p>
+<div class="highlight-python"><div class="highlight"><pre>git config --global
+<div class="newline"></div>git config --global user.name &quot;Your Name Comes Here&quot;
+<div class="newline"></div>git config --global user.email you@yourdomain.com``
+<div class="newline"></div>git config --global core.editor vim
+<div class="newline"></div>git config color.ui auto
+<div class="newline"></div></pre></div>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">--global</span></tt> option corresponds to a user-wide configuration. The
+configuration will be stored in a hidden repository in your home. You can also
+configure each git repository individually, by removing this option, or
+system-wide by replacing the <tt class="docutils literal"><span class="pre">--global</span></tt> option with <tt class="docutils literal"><span class="pre">--system</span></tt>. Usually,
+we just configure repositories user-wide.</p>
+<p>You can check your configuration with:</p>
+<div class="highlight-python"><div class="highlight"><pre>git config --list
+<div class="newline"></div></pre></div>
+</div>
+<p>If you&#8217;ve configured git several times at different levels, you will probably
+see several entries twice or three times in the configuration list. The
+user-wide configuration overrides the system-wide configuration, and the local
+configuration overrides the user-wide configuration.</p>
+</div>
+<div class="section" id="creating-snapshots-committing">
+<h2>Creating snapshots: &#8220;committing&#8221;<a class="headerlink" href="#creating-snapshots-committing" title="Permalink to this headline">¶</a></h2>
+<p>One of the main goal of version control is to save snapshots of your
+directory. We call those snapshots commits. To each snapshot is associated
+some metadata: the date the snapshot was taken, who took it, what files where
+modified, the changes that were made on those files etc. Git will enable you
+to track the changes made to the files, revert the entire project to a
+previous snapshot, review changes made over time, view who modified a file.</p>
+<p>Now that we know why we want to create a snapshot, let&#8217;s see how to do this.
+Right now, nothing in the project is tracked.
+First let&#8217;s create some directories and files in our directory.</p>
+<div class="highlight-bash"><div class="highlight"><pre>touch README
+<div class="newline"></div></pre></div>
+</div>
+<p>You now have a new file in the project folder. As mentioned before, git does
+not track this file yet. First, you need to tell git this file exists:</p>
+<div class="highlight-python"><div class="highlight"><pre>git add README
+<div class="newline"></div></pre></div>
+</div>
+<p>Now you can commit it:</p>
+<div class="highlight-python"><div class="highlight"><pre>git commit -m &quot;Added a README file&quot;
+<div class="newline"></div></pre></div>
+</div>
+<p>At this point, you have one tracked file, and an initial commit.
+Each file in the working directory can be in one of two states: tracked or
+untracked. Any file you have not explicitly added at some point is untracked.
+Tracked files can themselves be in different states: unmodified, modified or
+staged.</p>
+<div class="figure">
+<img alt="_images/git_file_status_lifecycle.png" src="_images/git_file_status_lifecycle.png" />
+</div>
+<p>You can check the status of each file in your directory with the
+command <tt class="docutils literal"><span class="pre">git</span> <span class="pre">status</span></tt>. This command will display all untracked files, and
+modified and staged files in your directory:</p>
+<div class="highlight-python"><div class="highlight"><pre>touch AUTHORS
+<div class="newline"></div>git status
+<div class="newline"></div></pre></div>
+</div>
+<p>Note as the README file is not listed, while the AUTHORS file is there. Now
+let&#8217;s add the AUTHORS file. The AUTHORS file is now tracked, and staged:</p>
+<div class="highlight-python"><div class="highlight"><pre>git add AUTHORS
+<div class="newline"></div>git status
+<div class="newline"></div></pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></tt> is also used to stage file. In fact, running <tt class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></tt> on an
+untracked file not only tracks it, but stages it. <tt class="docutils literal"><span class="pre">git</span> <span class="pre">commit</span></tt> will take a
+snapshot of the staged files:</p>
+<div class="highlight-python"><div class="highlight"><pre>git commit -m &quot;Added the AUTHORS file&quot;
+<div class="newline"></div></pre></div>
+</div>
+<p>And here is the second commit! Sometimes, you may want to look at the changes
+you&#8217;ve made to a modified file:</p>
+<div class="highlight-python"><div class="highlight"><pre>git diff
+<div class="newline"></div></pre></div>
+</div>
+<p>To look at the changes you&#8217;ve made in the staged files, simply use:</p>
+<div class="highlight-python"><div class="highlight"><pre>git diff --cached
+<div class="newline"></div></pre></div>
+</div>
+<p>And to view the history of all commits:</p>
+<div class="highlight-python"><div class="highlight"><pre>git log
+<div class="newline"></div></pre></div>
+</div>
+<p>Now, let&#8217;s try to rm AUTHORS:</p>
+<div class="highlight-python"><div class="highlight"><pre>rm AUTHORS CONTRIBUTORS
+<div class="newline"></div>git status
+<div class="newline"></div></pre></div>
+</div>
+<p>You can see that the <tt class="docutils literal"><span class="pre">AUTHORS</span></tt> file is in red, and marked as deleted. Yet,
+running <tt class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></tt> on this file doesn&#8217;t move the change in the staging area.
+To remove a file that has been tracked with git, use the <tt class="docutils literal"><span class="pre">git</span> <span class="pre">rm</span></tt> command.
+In a similar fashion, <tt class="docutils literal"><span class="pre">git</span> <span class="pre">mv</span></tt> can be used to move a file.</p>
+<p>Because to err is human, you may want to cancel some stages. Two scenarios may
+occur: (1) you have staged a file you do not want to commit (2) you have made
+some changes on a file you want to cancel.</p>
+<p>First, let&#8217;s assume you&#8217;ve staged a file you want to unstage:</p>
+<div class="highlight-python"><div class="highlight"><pre>touch TODO
+<div class="newline"></div>git add TODO
+<div class="newline"></div></pre></div>
+</div>
+<p>To unstage it, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>git reset HEAD TODO
+<div class="newline"></div></pre></div>
+</div>
+<p>The syntax is <tt class="docutils literal"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">HEAD</span> <span class="pre">&lt;filename&gt;</span></tt>. We will explain what HEAD is later
+on.</p>
+<p>In the second case, you&#8217;ve modified a file and you want to cancel the changes.
+To do so, use <tt class="docutils literal"><span class="pre">git</span> <span class="pre">checkout</span> <span class="pre">&lt;filename&gt;</span></tt>. If you run <tt class="docutils literal"><span class="pre">git</span> <span class="pre">status</span></tt>, you can
+notice git reminds you what command to use for which action.</p>
+<div class="section" id="exercises">
+<h3>Exercises<a class="headerlink" href="#exercises" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Create a folder called GitTutorial</li>
+<li>Inside it, initialize an empty git repository (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">init</span></tt>)</li>
+<li>Create an AUTHORS file, a TODO file and a README file.</li>
+<li>Add the AUTHORS file to the staging area. (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></tt>)</li>
+<li>Check the status of the repository (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">status</span></tt>)</li>
+<li>Add the two other files to the staging area (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">add</span></tt>)</li>
+<li>Commit your changes (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">commit</span></tt>).</li>
+<li>Now rename the AUTHORS file to CONTRIBUTORS (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">mv</span></tt>)</li>
+<li>Add your name to the CONTRIBUTORS file.</li>
+<li>Cancel the changes you&#8217;ve made to this file.</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="working-with-a-distant-repository-with-github">
+<h2>Working with a distant repository with github<a class="headerlink" href="#working-with-a-distant-repository-with-github" title="Permalink to this headline">¶</a></h2>
+<p>Up to now, we&#8217;ve been working locally on our computer. As researched and
+computer scientist, you may want to share your work, (or better contribute to
+an opensource project!). This is where github comes in handy. Github is a web
+hosting plateform for git projects. Not only does it provide free git
+repository for opensource projects (private ones can be purchased, or asked
+for free for students and women), but it provides great tools to review code,
+manage projects, release packages and publish documentation. Most of the
+scientific python code <strong>you</strong> use are hosted on github.</p>
+<p>Now, let&#8217;s go on github, and create an account. Once this is done, we can
+easily create a new project by cliking on the green button, on the main page.</p>
+<img alt="_images/github_1.png" src="_images/github_1.png" />
+<p>Github redirects you to a page, where you specify the name of the repository
+and a few information. By default, git repositories hosted on github will be
+public. If you want private repositories, you either have to pay 7$ per
+months. If you are a woman or/and in academics, you can also ask for free
+private repositories <a class="footnote-reference" href="#id3" id="id1">[1]</a> <a class="footnote-reference" href="#id4" id="id2">[2]</a>.</p>
+<table class="docutils footnote" frame="void" id="id3" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td><a class="reference external" href="http://adainitiative.org/2013/04/github-donates-private-repositories-to-women-learning-open-source-software/">Free github reposytories for women</a></td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td><a class="reference external" href="https://github.com/edu">Github for academics</a></td></tr>
+</tbody>
+</table>
+<p>Github then displays a page with a url, and some information on how to proceed
+to configure your local repository. Note that if you decide to create a README
+file, a Licence or a .gitignore on github, it will automatically commit.</p>
+<img alt="_images/github_2.png" src="_images/github_2.png" />
+<p>To use this new git repository, we are going to associate to this url a name.
+To add a new remote Git repository as a shortname you can reference easily,
+run <tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">add</span> <span class="pre">&lt;shortname&gt;</span> <span class="pre">&lt;url&gt;</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>git remote add origin &lt;github_url&gt;
+<div class="newline"></div></pre></div>
+</div>
+<p>The &lt;github_url&gt; can be new referenced as origin. To check which remotes
+you&#8217;ve added, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>git remote
+<div class="newline"></div></pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-python"><div class="highlight"><pre>git remote -v
+<div class="newline"></div></pre></div>
+</div>
+<p>Now that you&#8217;ve added this shortcut, you can push new changes to the remotes:</p>
+<div class="highlight-python"><div class="highlight"><pre>git push origin master
+<div class="newline"></div></pre></div>
+</div>
+<p>And now, checkout your github repository !</p>
+<p>You can also fetch changes from a github repository:</p>
+<div class="highlight-python"><div class="highlight"><pre>git fetch origin
+<div class="newline"></div></pre></div>
+</div>
+<p>This will fetch all the changes of all branches from the remote (we will see
+branches later one). Yet, it will not merge those changes with your work.</p>
+<p>Sometimes, you may want to rename or remove a remote. To do so, run <tt class="docutils literal"><span class="pre">git</span>
+<span class="pre">remote</span> <span class="pre">rename</span> <span class="pre">&lt;old_remote_name&gt;</span> <span class="pre">&lt;new_remote_name&gt;</span></tt> and <tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span> <span class="pre">rm</span>
+<span class="pre">&lt;remote_name&gt;</span></tt>.</p>
+</div>
+<div class="section" id="branching-and-merging">
+<h2>Branching and merging<a class="headerlink" href="#branching-and-merging" title="Permalink to this headline">¶</a></h2>
+<p>To understand what a branch is, let&#8217;s first go back to what a commit is. A
+commit is a snapshot of a repository at a certain time. Each commit contains
+metadata: a hash to identify the commit, the author name, date etc. It also
+contains a link to the parent commit. Hence, committing creates a sort of
+linked list of commits.</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/git_0-300dpi.png"><img alt="_images/git_0-300dpi.png" src="_images/git_0-300dpi.png" style="width: 441.9px; height: 152.1px;" /></a>
+</div>
+<p>A branch is just a pointer to a commit:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/git_1-300dpi.png"><img alt="_images/git_1-300dpi.png" src="_images/git_1-300dpi.png" style="width: 416.1px; height: 159.9px;" /></a>
+</div>
+<p>In fact, you&#8217;ve been using a branch called <cite>master</cite> since the beginning.
+Creating a new branch just adds a pointer to a commit:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/git_2-300dpi.png"><img alt="_images/git_2-300dpi.png" src="_images/git_2-300dpi.png" style="width: 416.7px; height: 263.4px;" /></a>
+</div>
+<p>Let&#8217;s now create a new branch and call it <tt class="docutils literal"><span class="pre">testing</span></tt>. You can either use the
+commands:</p>
+<div class="highlight-python"><div class="highlight"><pre>git branch testing
+<div class="newline"></div></pre></div>
+</div>
+<p>Now, how does github know in which branch you are? It just creates a pointer
+called HEAD to the current working branch:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/git_3-300dpi.png"><img alt="_images/git_3-300dpi.png" src="_images/git_3-300dpi.png" style="width: 416.7px; height: 364.8px;" /></a>
+</div>
+<p>You can check which branch you created by running:</p>
+<div class="highlight-python"><div class="highlight"><pre>git branch
+<div class="newline"></div></pre></div>
+</div>
+<p>The branch in green marked with an asterix is the branch you are currently
+working on. To switch branch, run:</p>
+<div class="highlight-python"><div class="highlight"><pre>git checkout testing
+<div class="newline"></div></pre></div>
+</div>
+<p>You can create and change branch in a one-liner:</p>
+<div class="highlight-python"><div class="highlight"><pre>git checkout -b testing
+<div class="newline"></div></pre></div>
+</div>
+<p>If you add commits on both <tt class="docutils literal"><span class="pre">master</span></tt> and <tt class="docutils literal"><span class="pre">testing</span></tt>, the code can diverge:</p>
+<div class="figure">
+<a class="reference internal image-reference" href="_images/git_10-300dpi.png"><img alt="_images/git_10-300dpi.png" src="_images/git_10-300dpi.png" style="width: 737.7px; height: 516.0px;" /></a>
+</div>
+<p>Now let&#8217;s add a new commit:</p>
+<div class="highlight-python"><div class="highlight"><pre>vim AUTHORS
+<div class="newline"></div>git add AUTHORS
+<div class="newline"></div>git status
+<div class="newline"></div>git commit -m &quot;Added a new author&quot;
+<div class="newline"></div></pre></div>
+</div>
+<p>You&#8217;ve now created a new commit in branch <tt class="docutils literal"><span class="pre">testing</span></tt>. You can easily go
+back to the master branch by running:</p>
+<div class="highlight-python"><div class="highlight"><pre>git checkout master
+<div class="newline"></div></pre></div>
+</div>
+<p>Checking out a branch will restore the tracked files to the state they were at
+the last commit you created on the branch you are going back to. Note that if
+you have uncommitted or staged changes, git will not permit to switch
+branches.</p>
+<p>To incorporate the changes of the branch <tt class="docutils literal"><span class="pre">testing</span></tt> into <tt class="docutils literal"><span class="pre">master</span></tt>, you need
+to merge <tt class="docutils literal"><span class="pre">testing</span></tt> in master. To do so, make sure you are in branch master
+(using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">branch</span></tt>), and run the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre>git merge testing
+<div class="newline"></div></pre></div>
+</div>
+<p>You can use git log to check that the changes have been merged into master.
+Once a branch has been merged, you can delete it:</p>
+<div class="highlight-python"><div class="highlight"><pre>git branch -d testing
+<div class="newline"></div></pre></div>
+</div>
+<p>Remember how, in the previous section, we discussed how to fetch changes from
+a remote repository using <tt class="docutils literal"><span class="pre">git</span> <span class="pre">fetch</span></tt>? We also said fetching the changes did
+not incorporate them into your working repository. So what does it do... Git
+fetch updates a series of branch from a remote, let say <tt class="docutils literal"><span class="pre">origin</span></tt>, by
+creating and updating remote branches called <tt class="docutils literal"><span class="pre">origin/branch_name</span></tt>.
+If you wan to update your branch <tt class="docutils literal"><span class="pre">master</span></tt> with the changes you&#8217;ve pulled
+into <tt class="docutils literal"><span class="pre">origin/master</span></tt>, you need to merge <tt class="docutils literal"><span class="pre">origin/master</span></tt> onto <tt class="docutils literal"><span class="pre">master</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>git merge origin/master
+<div class="newline"></div></pre></div>
+</div>
+<p>You can checkout the remote branches, but you should never (never ever
+ever!!!) work in those branches.</p>
+<div class="section" id="id5">
+<h3>Exercises<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Create a github account.</li>
+<li>Create a git project. <strong>Do not add a readme file, a .gitignore file, or
+anything thing to this project through the github interface</strong>. This would
+create a commit and be quite annoying for the rest of the exercise.</li>
+<li>Add a remote called origin to your local git repository (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">remote</span>
+<span class="pre">add</span></tt>). Note that github tells you how to do this.</li>
+<li>Push your changes to the remote (<tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span></tt>) and check your changes do
+appear on Github.</li>
+<li>Now create a branch called <tt class="docutils literal"><span class="pre">fix</span></tt>. Edit the README file (add a title to
+it), add it to the staging area and commit it.</li>
+<li>Push this branch on the github repository:: <tt class="docutils literal"><span class="pre">git</span> <span class="pre">push</span> <span class="pre">origin</span> <span class="pre">fix</span></tt>. This
+branch should appear in the github interface.</li>
+<li>Now merge the changes back to your master branch.</li>
+</ul>
+</div></blockquote>
+<p><div style="clear: both"></div></p>
+</div>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="#">Git lecture notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012,2013.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>

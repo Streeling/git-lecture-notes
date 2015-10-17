@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Git și Github &mdash; Git lecture notes</title>
+    
+    <link rel="stylesheet" href="../_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2013.2 beta (euroscipy 2013)',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/copybutton.js"></script>
+    <link rel="top" title="Git lecture notes" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="../index.html">Git lecture notes</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body">
+            
+  <div class="section" id="git-si-github">
+<h1>Git și Github<a class="headerlink" href="#git-si-github" title="Permalink to this headline">¶</a></h1>
+<p>Acest tutorial a fost elaborat pentru conferința EuroScipy&#8216;13 și susținut în
+cadrul acestei conferințe. Tutorialul este destinat cercetătorilor care, după
+cum știm (sau nu știm), în funcție de domeniul de crecetare pot fi sau pot să nu
+fie la curent cu ceea ce înseamnă un sistem de control al versiunilor.</p>
+<p>Alte tutoriale de la aceeași conferință (bazate pe python) pot fi accesate
+<a class="reference external" href="http://scipy-lectures.github.io">aici</a>.</p>
+<div class="section" id="de-ce-ar-folosi-cineva-un-sistem-de-control-al-versiunilor">
+<h2>De ce ar folosi cineva un sistem de control al versiunilor?<a class="headerlink" href="#de-ce-ar-folosi-cineva-un-sistem-de-control-al-versiunilor" title="Permalink to this headline">¶</a></h2>
+<p>Ca cercetător (probabil) optați pentru cercetări:</p>
+<blockquote>
+<div><ul class="simple">
+<li>reproductibile</li>
+<li>rapide și eficiente</li>
+</ul>
+</div></blockquote>
+<div class="figure">
+<img alt="../_images/Journal-of-Irrproducibe-Research1.jpg" src="../_images/Journal-of-Irrproducibe-Research1.jpg" />
+<p class="caption">The journal of Irreproducible research.</p>
+</div>
+<p>Și-n mod ideal dvs. ați dori să evitați o astfel de situație:</p>
+<div class="figure">
+<img alt="../_images/version_control1.gif" src="../_images/version_control1.gif" />
+<p class="caption">&#8220;Piled Higher and Deeper&#8221; de Jorge Cham: www.phdcomics.com</p>
+</div>
+<p>Sistemele de control al versiunilor permit reținerea (înregistrarea) istoricului
+modificărilor (versiunilor) operate asupra fișierelor proiectului astfel încât să
+puteți reveni la anumite versiuni mai târziu. De asemenea Git face ca lucrul
+colaborativ asupra unuia și aceluiași proiect să devină mai eficient. În plus,
+poate fi utilizat ca un data-centru, în cadrul căruia să fie posibilă integrarea continuă
+și automatizarea secvenței de operații care produce programul final (build [eng]).</p>
+<p>În acest tutorial vom studia elementele de bază ale programului Git și ale
+sitului Github. Dar înainte de toate, vom răspunde la întrebarea: ce
+este Git? Git este un sistem distribuit de control al versiunilor (DVCS -
+Distributed Version Control Software [eng]). Iar
+Github este un sit web ce oferă gratuit servicii de stocare a codului sursă, gestiunea
+acestuia realizându-se doar prin Git. Există desigur și alte sisteme
+de control al versiunii, cum ar fi: mercurial și bazaar, cu siturile web asociate,
+bitbucket (care la fel suportă și Git) și, corespunzător, launchpad.</p>
+<p>De ce am ales (în acest tutorial) anume git, și nu mercurial, care nu doar că
+este scris în python, dar și a fost ales de CPython (și de multe alte proiecte
+bazate pe python) pentru a păstra codul? A fost o decizie simplă, grație faptului că
+în lumea științifică, git și github sunt mult mai mult utilizate decît mercurial
+(și bitbucket). Într-adevăr, o căutare cu ajutorul servicului scholar.google.com va da
+14,100 rezultate pentru cuvăntul cheie „github”, în timp ce pentru - „bitbucket”
+rezultatul căutării va fi în număr de 2,260. Dacă aceste date nu sunt
+suficiente pentru a vă convinge, umează un tabel de pachete pe python împărțite
+în două liste: cele stocate pe github și cele stocate pe bitbucket.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="47%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Github</th>
+<th class="head">Bitbucket</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><ul class="first last simple">
+<li>Numpy</li>
+<li>Scipy</li>
+<li>IPython</li>
+<li>matplotlib</li>
+<li>Sympy</li>
+<li>Scikit-learn</li>
+<li>Scikit-image</li>
+<li>Numba</li>
+<li>Mayavi</li>
+<li>Traits</li>
+<li>Enable</li>
+<li>Enamel</li>
+<li>Pandas</li>
+<li>biopython</li>
+<li>Cython</li>
+<li>statsmodel</li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li>PIL</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Înainte de a trece la studierea propriu-zisă a posibilităților oferite de git, trebuie să
+știți că git este un program foarte complex și sofisticat. În acest tutorial, cum a fost deja
+menționat, vor fi prezentate doar elementele de bază ale lui Git, respectiv
+multe lucruri vor rămâne încă neclare. Dar după o perioadă de utilizare vă veți
+acomoda și veți căuta să utilizați comenzi mult mai complexe.</p>
+<p>În linii generale, o sesiune de lucru cu Git este compusă preponderent din urmatoarele operații:</p>
+<blockquote>
+<div><ul class="simple">
+<li>modificarea fișierelor în dosarul de lucru.</li>
+<li>marcarea fișierelor la care ați lucrat. Această operație va pregati o captură a dosarului</li>
+<li>efectuarea unui commit a fișierelor marcate. Această operație va stoca captura în depozitul Git.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="initializarea-depozitului-de-fisiere-si-setarea-programului-git">
+<h2>Inițializarea depozitului de fișiere și setarea programului git<a class="headerlink" href="#initializarea-depozitului-de-fisiere-si-setarea-programului-git" title="Permalink to this headline">¶</a></h2>
+<p>Există mai multe metode de a inițializa un depozit git. Prima metodă se
+utilizează atunci când doriți să inițializați depozitul git pentru un proiect
+care deja se află pe calculatorul dvs. Pe când a doua metodă - pentru a descărca
+un depozit git existent (obțiunând în rezultat o copie locală a acestuia).</p>
+<p>Dacă sunteți în situația când vi se potrivește prima metodă, atunci treceți în
+dosarul proiectului și rulați comanda:</p>
+<div class="highlight-python"><div class="highlight"><pre>git init
+<div class="newline"></div></pre></div>
+</div>
+<p>Ca urmare, în dosarul proiectului, se va crea un dosar ascuns .git, în care se
+va păstra istoricul tuturor modificărilor operate asupra acestui dosar și a
+subdosarelor.</p>
+<p>A doua metodă presupune utilizarea comenzii:</p>
+<div class="highlight-python"><div class="highlight"><pre>git clone https://github.com/git-lectures/git-lecture-notes.git
+<div class="newline"></div></pre></div>
+</div>
+<p>Această comandă va crea o copie locală a depozitului ce conține  fișierele acestui
+tutorial.</p>
+<p>Înainte de a purcede mai departe haideți să setăm git-ul. Va trebuie să faceți
+acest lucru pentru fiecare calculator în parte:</p>
+<div class="highlight-python"><div class="highlight"><pre>git config --global
+<div class="newline"></div>git config --global user.name &quot;Numele dvs&quot;
+<div class="newline"></div>git config --global user.email dvs@deomeniuldvs.com``
+<div class="newline"></div>git config --global core.editor vim
+<div class="newline"></div>git config color.ui auto
+<div class="newline"></div></pre></div>
+</div>
+<p>Opțiunea <tt class="docutils literal"><span class="pre">--global</span></tt> se utilizează atunci când doriți ca setările să fie la nivel
+de utilizator. Setările vor fi stocate într-un dosar ascuns în dosarul personal.
+De asemenea puteți seta fiecare depozit git în parte, scoțînd această opțiune, sau
+puteți seta pentru întreg sistemul punând în loc de <tt class="docutils literal"><span class="pre">--global</span></tt> opțiunea <tt class="docutils literal"><span class="pre">--system</span></tt>.
+De obicei, se setează depozitele la nivel de utilizator și la nivel de sistem.</p>
+<p>Puteți verifica care-s setările cu dvs. cu:</p>
+<div class="highlight-python"><div class="highlight"><pre>git config --list
+<div class="newline"></div></pre></div>
+</div>
+<p>Dacă ați setat la diferite nivele veți vedea mai multe înregistrări care se repetă.
+Setarile pentru utilizator au prioritate în raport cu setarile la nivel de sistem și
+setarile locale au prioritate mai mare în raport cu cele de utilizator.</p>
+<p><div style="clear: both"></div></p>
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li><a href="../index.html">Git lecture notes</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012,2013.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
