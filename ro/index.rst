@@ -143,7 +143,7 @@ setarile locale au prioritate mai mare în raport cu cele de utilizator.
 Crearea capturilor: operația „commit” (sau sau salvarea modificărilor)
 --------------------------------------------------------------------------------
 
-Unul dintre principalele scopuri a controlului versiunii este de a salva capturi 
+Unul dintre principalele scopuri al controlului versiunii este de a salva capturi 
 ale dosarului dvs. Noi numim aceste capturi commit-uri. Fiecărei capturi îi este  
 asociată careva meta informație: data creării capturii, cine a făcut-o, care 
 fișiere au fost modificate, însăși modificările făcute fișierelor etc. Git vă va 
@@ -250,7 +250,181 @@ Exerciții
   - Adăugați numele dvs. înăuntrul fișierului CONTRIBUTORS.
   - Anulați modificările aplicate acestui fișier.
 
+  Lucrul cu un depozit pe github
+--------------------------------------------------------------------------------
+
+Până acum, am lucrat local pe caluclatorul personal. Ca un cercetător și un 
+utilizator de calculator, puteți dori să vă împărtășiți munca (sau mai mult, 
+să contribuiți la un proiect cu surse deschise!). În acest caz github este 
+foarte util. Github este o platformă web pentru găzduirea proiectelor git. Nu 
+numai că oferă gratuit posibilitatea de a stoca depozite git ale proiectelor 
+cu surse deschise (stocarea proiectele private se face contra plată sau pot 
+fi gratuite la cerere pentru proiectle pentru studenți și femei), dar oferă 
+instrumente extraordinare pentru revizuirea codului, administrarea 
+proiectelor, crearea pachetelor și publicarea documentației. Majoritatea 
+proiectelor bazate pe python pentru munca științifică sunt găzduite pe github. 
+
+Și acum să trecem la github și să creăm un cont. După ce am făcut acest lucru, 
+putem ușor crea un proiect, făcând clic pe butonul verde de pe prima pagină.
+
+.. image:: ../images/github_1.png
+
+Github vă redirecționează către o pagină unde puteți specifica denumirea 
+depozitului și alte detalii. Implicit depozitile găzduite pe github sunt 
+publice. În cazul când doriți un depozit privat, fie achitați 7$ în fiecare 
+lună. Dacă sunteți femeie sau cadru academic puteți cere depozite private 
+gratuite [#]_ [#]_.
+
+.. [#]  `Free github reposytories for women <http://adainitiative.org/2013/04/github-donates-private-repositories-to-women-learning-open-source-software/>`_
+
+.. [#] `Github for academics <https://github.com/edu>`_
+
+Github va afișa o pagină ce va conține o adresă și informație referitor la 
+pașii ce trebuie făcuți pentru a seta depozitul local. De notat că dacă 
+decideți să creați un fișier README, fișier de licență sau .gitignore pe 
+github, acestea automat for fi salvate.
+
+.. image:: ../images/github_2.png
+
+Pentru a utiliza acest depozit nou creat vom asocia acestuia o adresă.
+Pentru a adăuga un depozit pe git cu nume prescurtat executați 
+``git remote add <shortname> <url>``::
+
+  git remote add origin <github_url>
+
+Adresa <github_url> poate fi referită ca origin. Pentru a verifica ce depozite::
+
+  git remote
+
+sau::
+
+  git remote -v
+
+Acum că am adăugat această scurtătura putem încărca noile modificări pe server::
+
+  git push origin master
+
+Și acum verificati depozitul dvs. de pe github !
+
+La afel puteți aduce modificările de pe depozitul github:: 
+
+  git fetch origin
+
+Acestă comandă va aduce toate modificările de pe toate ramurile din proiectul 
+de la distanță (noi vom vorbi despre ramuri puțin mai târziu). Până când aceste 
+modificări nu le vom integra acele modificări cu lucrul dvs.
+
+Uneori, poate apărea necesitatea de a redenumi sau ștereg o remote. Pentru a face 
+acest lucru, rulați ``git remote rename <old_remote_name> <new_remote_name>`` și 
+``git remote rm <remote_name>``.
+
 Crearea ramurilor și fuzionarea acestora
 --------------------------------------------------------------------------------
 
+Pentru a înțelege mai bine ce este o ramură să revenim la ceea ce este commit. 
+Un commit este o ''fotografie' a depozitului într-un moment de timp. Orice comiit 
+conține meta informație: un hash ce identifică commit-ul, numele autorului, data etc. 
+De asemenea conține și o referință către commit-ul părinte. Astfel, în procesul de 
+comitere se creează un fel de listă înlănțuită de commit-uri. 
 
+.. figure:: ../images/git_0-300dpi.png
+   :scale: 30%
+
+O ramură nu este altceva decât un pointer către un commit:
+
+.. figure:: ../images/git_1-300dpi.png
+   :scale: 30%
+
+De fapt, chiar de la început până acum dvs. ați utilizat o ramură numită `master`.
+Crearea unei ramuri noi presupune de fapt crearea unui pointer nou care indică spre un commit:
+
+.. figure:: ../images/git_2-300dpi.png
+   :scale: 30%
+
+
+Să creăm acum o ramură cu numele ``testing``. Puteți fie utiliza comenzile::
+
+  git branch testing
+
+Acum, de unde stie github în care ramură dvs. lucrați? Simplu, există aun pointer denumit HEAD 
+care indică către ramura curentă:
+
+.. figure:: ../images/git_3-300dpi.png
+   :scale: 30%
+
+Puteți vedea această ramură rulând::
+
+  git branch
+
+Ramura cu verde marcată cu un asterisc este ramura curentă în care lucrați. 
+Pentru a comuta ramurile rulați::
+
+  git checkout testing
+
+Puteți crea și comuta la o ramură printr-o singută linie::
+
+  git checkout -b testing
+
+
+Dacă adăugați commit-uri atât în ramura ``master`` cât și în ``testing`` codul poate deja să fie diferit:
+
+.. figure:: ../images/git_10-300dpi.png
+   :scale: 30%
+
+Să adăugăm un commit nou::
+
+  vim AUTHORS
+  git add AUTHORS
+  git status
+  git commit -m "Added a new author"
+
+Astfel ați creat un nou commit în ramura ``testing``. Vă puteți întoarce la 
+la ramura ``master`` rulând::
+
+  git checkout master
+
+Trecând la o ramură numită are ca efect sinscronizarea fișierelor urmărite cu 
+ultimul commit din ramura la care vă comutați. De notat că dacă aveți modificări 
+necomise sau modificări în index, git nu va permite comutarea ramurilor. 
+
+Pentru a incorpora modificările ramurii ``testing`` în ``master``, trebuie să 
+integrați ``testing`` în master. Pentru a realiza acest lucru, asigurați-vă că sunteți 
+în ramura master (folosind ``git branch``), și rulați comanda::
+
+  git merge testing
+
+Puteți folosi git log pentru a verifica dacă modificările au fost integrate în master.
+După ce o ramură a fost integrată acesta poate fi ștearsă::
+
+  git branch -d testing
+
+Dacă vă amintiți cum în compartimentul precedent am discutat cum să descărcăm 
+modificările dintr-un depozit la distanță folosind ````git fetch``? Am mai spus atunci 
+că descărcarea n-a încorporat modificările în dosarul dvs. de lucru. Atunci ce face 
+această comandă... ``git fetch`` descarcă modificările din depozitul la distanță să-i zicem 
+``origin`` actulizând ramurile corepunzătoare locale ``origin/branch_name``.
+Dacă doriți să vă actualizați ramura dvs. ``master`` cu modificările puse în 
+``origin/master``, trebuie să integrați ``origin/master`` în ``master``::
+
+  git merge origin/master
+
+Puteți să descărcați schimbările în ramurile de la distanță, dar niciodată (niciodată 
+niciodată!!!) să nu lucrați în ele.
+
+
+Exerciții
+~~~~~~~~~~
+
+  - Creați un cont github.
+  - Creați un proiect git. **Nu includeți un fișier readme, un fișier .gitignore, sau 
+    orice altceva în proiect prin interfața github**. Întrucât aceste opțiuni vor crea 
+    un commit care va încurca în exercițiile ulterioare.
+  - Adăugați o referință către proicte la distanță numită origin (``git remote
+    add``). D notat că github vă poate ghida în această privință.
+  - Încărcați modificările la distanță (``git push``) și verificați dacă modificările au 
+    aparut pe Github.
+  - Acum creați o ramură numită ``fix``. Modificati fișierul README (adăugați un titlu), 
+    adăugați fișierul în index și comiteț-l.
+  - Încărcati acestă ramură în proiectul de pe github:: ``git push origin fix``. Acseată 
+    ramura trebuie să apară în interfața github.
+  - Acum integrați înapoi schimbările în ramura principală.
