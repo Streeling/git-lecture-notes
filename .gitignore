@@ -2,3 +2,5 @@
 build
 # gedit temporary files
 *~
+# python compiled
+*.pyc
