@@ -4,7 +4,7 @@ Git și Github
 
 Acest tutorial a fost elaborat pentru conferința EuroScipy'13 și susținut în 
 cadrul acestei conferințe. Tutorialul este destinat cercetătorilor care, după 
-cum știm (sau nu știm), în funcție de domeniul de crecetare pot fi sau pot să nu 
+cum știm (sau nu știm), în funcție de domeniul de cercetare pot fi sau pot să nu 
 fie la curent cu ceea ce înseamnă un sistem de control al versiunilor.
 
 Alte tutoriale de la aceeași conferință (bazate pe python) pot fi accesate 
@@ -29,20 +29,21 @@ Ca cercetător (probabil) optați pentru cercetări:
   "Piled Higher and Deeper" de Jorge Cham: www.phdcomics.com
 
 Sistemele de control al versiunilor permit reținerea (înregistrarea) istoricului 
-modificărilor (versiunilor) operate asupra fișierelor proiectului astfel încât să 
-puteți reveni la anumite versiuni mai târziu. De asemenea Git face ca lucrul 
-colaborativ asupra unuia și aceluiași proiect să devină mai eficient. În plus, 
-poate fi utilizat ca un data-centru, în cadrul căruia să fie posibilă integrarea continuă 
-și automatizarea secvenței de operații care produce programul final (build [eng]).
+modificărilor (versiunilor) operate asupra fișierelor proiectului astfel încât 
+să puteți reveni la anumite versiuni mai târziu. De asemenea un astfle de sistem 
+face ca lucrul colaborativ asupra unuia și aceluiași proiect să devină mai 
+eficient. În plus, poate fi utilizat ca un data-centru, în cadrul căruia să fie 
+posibilă integrarea continuă și automatizarea secvenței de operații care produce 
+programul final [din eng.: build].
 
 În acest tutorial vom studia elementele de bază ale programului Git și ale 
 sitului Github. Dar înainte de toate, vom răspunde la întrebarea: ce 
-este Git? Git este un sistem distribuit de control al versiunilor (DVCS - 
-Distributed Version Control Software [eng]). Iar  
-Github este un sit web ce oferă gratuit servicii de stocare a codului sursă, gestiunea 
-acestuia realizându-se doar prin Git. Există desigur și alte sisteme 
-de control al versiunii, cum ar fi: mercurial și bazaar, cu siturile web asociate, 
-bitbucket (care la fel suportă și Git) și, corespunzător, launchpad.  
+este Git? Git este un sistem distribuit de control al versiunilor (din eng.: 
+DVCS - Distributed Version Control Software). Iar Github este un sit web ce 
+oferă gratuit servicii de stocare a codului sursă, gestiunea acestuia 
+realizându-se doar prin Git. Există desigur și alte sisteme de control al 
+versiunii, cum ar fi: mercurial și bazaar, cu siturile web asociate, bitbucket 
+(care la fel suportă și Git) și, corespunzător, launchpad.  
 
 De ce am ales (în acest tutorial) anume git, și nu mercurial, care nu doar că 
 este scris în python, dar și a fost ales de CPython (și de multe alte proiecte 
@@ -76,21 +77,25 @@ suficiente pentru a vă convinge, umează un tabel de pachete pe python împăr�
 | ....                              |                                        |
 +-----------------------------------+----------------------------------------+
 
-Înainte de a trece la studierea propriu-zisă a posibilităților oferite de git, trebuie să 
-știți că git este un program foarte complex și sofisticat. În acest tutorial, cum a fost deja 
-menționat, vor fi prezentate doar elementele de bază ale lui Git, respectiv 
-multe lucruri vor rămâne încă neclare. Dar după o perioadă de utilizare vă veți 
-acomoda și veți căuta să utilizați comenzi mult mai complexe.
+Înainte de a trece la studierea propriu-zisă a posibilităților oferite de git, 
+trebuie să știți că git este un program foarte complex și sofisticat. În acest 
+tutorial, cum a fost deja menționat, vor fi prezentate doar elementele de bază 
+ale lui Git, respectiv multe lucruri vor rămâne încă neclare. Dar după o 
+perioadă de utilizare vă veți acomoda și veți căuta să utilizați comenzi mult 
+mai complexe.
 
-În linii generale, o sesiune de lucru cu Git este compusă preponderent din urmatoarele operații:
+În linii generale, o sesiune de lucru cu Git este compusă preponderent din 
+următoarele operații:
 
-  - modificarea fișierelor în dosarul de lucru.
-  - marcarea fișierelor la care ați lucrat. Această operație va pregati o captură a dosarului
-  - efectuarea unui commit a fișierelor marcate. Această operație va stoca captura în depozitul Git.
+  - modificarea fișierelor în dosarul de lucru;
+  - marcarea fișierelor la care ați lucrat. Această operație va pregăti o\ 
+captură a dosarului;
+  - efectuarea unui commit a fișierelor marcate. Această operație va stoca 
+captura în depozitul Git.
 
   
 Inițializarea depozitului de fișiere și setarea programului git
----------------------------------------------------------------
+--------------------------------------------------------------------------------
 
 Există mai multe metode de a inițializa un depozit git. Prima metodă se 
 utilizează atunci când doriți să inițializați depozitul git pentru un proiect 
@@ -102,20 +107,21 @@ dosarul proiectului și rulați comanda::
 
   git init
 
-Ca urmare, în dosarul proiectului, se va crea un dosar ascuns .git, în care se 
-va păstra istoricul tuturor modificărilor operate asupra acestui dosar și a 
-subdosarelor.
+Ca urmare, în dosarul proiectului, se va crea un dosar ascuns .git, în care pe 
+viitor va fi păstrat istoricul tuturor modificărilor operate asupra acestui dosar 
+și a subdosarelor.
 
 A doua metodă presupune utilizarea comenzii::
 
   git clone https://github.com/git-lectures/git-lecture-notes.git
 
-Această comandă va crea o copie locală a depozitului ce conține  fișierele acestui 
-tutorial.
+Această comandă va crea o copie locală a depozitului ce conține  fișierele 
+acestui tutorial.
 
 .. note:: Fiecare depozit trebuie să fie în propriul său dosar. Nu este permisă  
-   crearea sau duplicarea de depozite git înauntrul unui alt depozit git deja existent, 
-   adică în dosarul sau subdosarule în care deja ați inițializat un depozit git. 
+   crearea sau duplicarea de depozite git înăuntrul unui alt depozit git deja 
+existent, adică în dosarul sau subdosarule în care deja ați inițializat un 
+depozit git. 
 
 Înainte de a purcede mai departe haideți să setăm git-ul. Va trebuie să faceți 
 acest lucru pentru fiecare calculator în parte::
@@ -126,26 +132,28 @@ acest lucru pentru fiecare calculator în parte::
   git config --global core.editor vim
   git config color.ui auto
 
-Opțiunea ``--global`` se utilizează atunci când doriți ca setările să fie la nivel 
-de utilizator. Setările vor fi stocate într-un dosar ascuns în dosarul personal. 
-De asemenea puteți seta fiecare depozit git în parte, scoțînd această opțiune, sau 
-puteți seta pentru întreg sistemul punând în loc de ``--global`` opțiunea ``--system``. 
-De obicei, se setează depozitele la nivel de utilizator și la nivel de sistem.
+Opțiunea ``--global`` se utilizează atunci când doriți ca setările să fie la 
+nivel de utilizator. Setările vor fi stocate într-un dosar ascuns în dosarul 
+personal. De asemenea puteți seta fiecare depozit git în parte, scoțând această 
+opțiune, sau puteți seta pentru întreg sistemul punând în loc de ``--global`` 
+opțiunea ``--system``. De obicei, se setează depozitele la nivel de utilizator 
+și la nivel de sistem.
 
 Puteți verifica care-s setările dvs. cu::
 
   git config --list
 
-Dacă ați setat la diferite nivele veți vedea mai multe înregistrări care se repetă.
-Setarile pentru utilizator au prioritate în raport cu setarile la nivel de sistem și 
-setarile locale au prioritate mai mare în raport cu cele de utilizator.
+Dacă ați setat la diferite nivele veți vedea mai multe înregistrări care se 
+repetă. Setările pentru utilizator au prioritate în raport cu setările la nivel 
+de sistem și setările locale au prioritate mai mare în raport cu cele de 
+utilizator.
 
-Crearea capturilor: operația „commit” (sau sau salvarea modificărilor)
+Crearea capturilor: operația „commit” (sau salvarea modificărilor)
 --------------------------------------------------------------------------------
 
 Unul dintre principalele scopuri al controlului versiunii este de a salva capturi 
 ale dosarului dvs. Noi numim aceste capturi commit-uri. Fiecărei capturi îi este  
-asociată careva meta informație: data creării capturii, cine a făcut-o, care 
+asociată o anumită meta informație: data creării capturii, cine a făcut-o, care 
 fișiere au fost modificate, însăși modificările făcute fișierelor etc. Git vă va 
 oferi posibilitatea de a urmări modificările făcute fișierelor, întoarcerea 
 întregului proiect la o anumită captură (versiune) din trecut, să vedeți 
@@ -160,7 +168,7 @@ La acest acest moment nimic nu este urmărit în proiect.
    touch README
 
 Acum aveți un fișier nou în dosar. Așa cum a fost menționat anterior, git încă nu 
-ține cont de acest fișier. Mai întîi trebuie să-i comunicăm că acest fișier există::
+ține cont de acest fișier. Mai întâi trebuie să-i comunicăm că acest fișier există::
 
   git add README
 
@@ -181,14 +189,14 @@ Această comandă va afișa toate fișierele ne urmărite și modificate, și ca
   touch AUTHORS
   git status
 
-Remarcăm că fișierul README nu este enumerat în timp ce fișierul AUTHORS este.
+Remarcăm că fișierul README nu este afișat în timp ce fișierul AUTHORS este.
 Acum să adăugăm fișierul AUTHORS. Acest fișier va fi de acum urmărit și capturat::
 
   git add AUTHORS
   git status
 
 ``git add`` de asemenea este folosit pentru a captura un fișier. De fapt, executînd 
-``git add`` asupra unui fișier ne urmărit nu numai îl va urmări dar și-l va captura. 
+``git add`` asupra unui fișier ne urmărit nu numai că îl va urmări dar și-l va captura. 
 ``git commit`` va face o captură a fișierelor urmărite::
 
   git commit -m "A fost adăugat fișierul AUTHORS"
@@ -212,15 +220,15 @@ Acum să încercăm să rm AUTHORS::
   git status
 
 Puteți observa că fișierul ``AUTHORS`` este cu roșu, și marcat ca fiind șters. 
-Aplicînd ``git add`` pe acest fișier nu mută modificare în zona de staging.
-Pentru a șterge un fișier care a început să fie umărit de git utilizați comanda 
+Aplicând ``git add`` pe acest fișier nu mută modificare în zona de staging.
+Pentru a șterge un fișier care a început să fie urmărit de git utilizați comanda 
 ``git rm``. Analog, ``git mv`` poate fi utilizată pentru a muta un fișier.
 
 Dar a greși este omenește, ați putea dori să anulați niște stages. Două scenarii 
 pot apărea: (1) ați staged un fișier pe care nu vreți să-l comiteți (2) ați făcut 
 niște modificări la un fișier pe care vreți să le anulați.
 
-Mai întîi, presupunem că ați făcut stage și vreți să-l scoateți din stage::
+Mai întâi, presupunem că ați făcut stage și vreți să-l scoateți din stage::
 
   touch TODO
   git add TODO
@@ -232,7 +240,7 @@ Pentru unstage::
 Sintaxa este ``git reset HEAD <numefișier>``. Vom explica ce este HEAD mai tîrziu
 
 În al doilea caz am modificat un fișier și vrem sa anulăm aceste modificări.
-Pentrua  face acest lucru utilizați ``git checkout <filename>``. Dacă executați 
+Pentru a  face acest lucru utilizați ``git checkout <filename>``. Dacă executați 
 ``git status`` remarcăm că git vă amintește ce comenzi pot fi utilizate pentru fiecare 
 operație.
 
@@ -240,7 +248,7 @@ Exerciții
 ~~~~~~~~~~
 
   - Creați un dosar cu numele GitTutorial
-  - Înauntrul acestui dosar, inițializați un depozit git (``git init``)
+  - Înăuntrul acestui dosar, inițializați un depozit git (``git init``)
   - Creați un fișier cu numele AUTHORS, un fișier TODO și README.
   - Adăugați fișierul AUTHORS la zona stage. (``git add``)
   - Verificați statutul depozitului (``git status``)
@@ -250,16 +258,16 @@ Exerciții
   - Adăugați numele dvs. înăuntrul fișierului CONTRIBUTORS.
   - Anulați modificările aplicate acestui fișier.
 
-  Lucrul cu un depozit pe github
+Lucrul cu un depozit pe github
 --------------------------------------------------------------------------------
 
-Până acum, am lucrat local pe caluclatorul personal. Ca un cercetător și un 
+Până acum, am lucrat local pe calculatorul personal. Ca un cercetător și un 
 utilizator de calculator, puteți dori să vă împărtășiți munca (sau mai mult, 
 să contribuiți la un proiect cu surse deschise!). În acest caz github este 
 foarte util. Github este o platformă web pentru găzduirea proiectelor git. Nu 
 numai că oferă gratuit posibilitatea de a stoca depozite git ale proiectelor 
 cu surse deschise (stocarea proiectele private se face contra plată sau pot 
-fi gratuite la cerere pentru proiectle pentru studenți și femei), dar oferă 
+fi gratuite la cerere pentru proiectele pentru studenți și femei), dar oferă 
 instrumente extraordinare pentru revizuirea codului, administrarea 
 proiectelor, crearea pachetelor și publicarea documentației. Majoritatea 
 proiectelor bazate pe python pentru munca științifică sunt găzduite pe github. 
@@ -270,7 +278,7 @@ putem ușor crea un proiect, făcând clic pe butonul verde de pe prima pagină.
 .. image:: ../images/github_1.png
 
 Github vă redirecționează către o pagină unde puteți specifica denumirea 
-depozitului și alte detalii. Implicit depozitile găzduite pe github sunt 
+depozitului și alte detalii. Implicit depozitele găzduite pe github sunt 
 publice. În cazul când doriți un depozit privat, fie achitați 7$ în fiecare 
 lună. Dacă sunteți femeie sau cadru academic puteți cere depozite private 
 gratuite [#]_ [#]_.
@@ -304,9 +312,9 @@ Acum că am adăugat această scurtătura putem încărca noile modificări pe s
 
   git push origin master
 
-Și acum verificati depozitul dvs. de pe github !
+Și acum verificați depozitul dvs. de pe github !
 
-La afel puteți aduce modificările de pe depozitul github:: 
+La fel puteți aduce modificările de pe depozitul github:: 
 
   git fetch origin
 
@@ -314,7 +322,7 @@ Acestă comandă va aduce toate modificările de pe toate ramurile din proiectul
 de la distanță (noi vom vorbi despre ramuri puțin mai târziu). Până când aceste 
 modificări nu le vom integra acele modificări cu lucrul dvs.
 
-Uneori, poate apărea necesitatea de a redenumi sau ștereg o remote. Pentru a face 
+Uneori, poate apărea necesitatea de a redenumi sau șterg o remote. Pentru a face 
 acest lucru, rulați ``git remote rename <old_remote_name> <new_remote_name>`` și 
 ``git remote rm <remote_name>``.
 
@@ -361,7 +369,7 @@ Pentru a comuta ramurile rulați::
 
   git checkout testing
 
-Puteți crea și comuta la o ramură printr-o singută linie::
+Puteți crea și comuta la o ramură printr-o singură linie::
 
   git checkout -b testing
 
@@ -402,7 +410,7 @@ Dacă vă amintiți cum în compartimentul precedent am discutat cum să descăr
 modificările dintr-un depozit la distanță folosind ````git fetch``? Am mai spus atunci 
 că descărcarea n-a încorporat modificările în dosarul dvs. de lucru. Atunci ce face 
 această comandă... ``git fetch`` descarcă modificările din depozitul la distanță să-i zicem 
-``origin`` actulizând ramurile corepunzătoare locale ``origin/branch_name``.
+``origin`` actualizând ramurile corespunzătoare locale ``origin/branch_name``.
 Dacă doriți să vă actualizați ramura dvs. ``master`` cu modificările puse în 
 ``origin/master``, trebuie să integrați ``origin/master`` în ``master``::
 
@@ -422,9 +430,9 @@ Exerciții
   - Adăugați o referință către proicte la distanță numită origin (``git remote
     add``). D notat că github vă poate ghida în această privință.
   - Încărcați modificările la distanță (``git push``) și verificați dacă modificările au 
-    aparut pe Github.
-  - Acum creați o ramură numită ``fix``. Modificati fișierul README (adăugați un titlu), 
+    apărut pe Github.
+  - Acum creați o ramură numită ``fix``. Modificați fișierul README (adăugați un titlu), 
     adăugați fișierul în index și comiteț-l.
-  - Încărcati acestă ramură în proiectul de pe github:: ``git push origin fix``. Acseată 
+  - Încărcați acestă ramură în proiectul de pe github:: ``git push origin fix``. Această 
     ramura trebuie să apară în interfața github.
   - Acum integrați înapoi schimbările în ramura principală.
