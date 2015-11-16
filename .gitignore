@@ -1,0 +1,4 @@
+# sphinx build dir
+build
+# gedit temporary files
+*~
