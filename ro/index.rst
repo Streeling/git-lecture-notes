@@ -30,7 +30,7 @@ Ca cercetător (probabil) optați pentru cercetări:
 
 Sistemele de control al versiunilor permit reținerea (înregistrarea) istoricului 
 modificărilor (versiunilor) operate asupra fișierelor proiectului astfel încât 
-să puteți reveni la anumite versiuni mai târziu. De asemenea un astfle de sistem 
+să puteți reveni la anumite versiuni mai târziu. De asemenea un astfel de sistem 
 face ca lucrul colaborativ asupra unuia și aceluiași proiect să devină mai 
 eficient. În plus, poate fi utilizat ca un data-centru, în cadrul căruia să fie 
 posibilă integrarea continuă și automatizarea secvenței de operații care produce 
@@ -88,10 +88,10 @@ mai complexe.
 următoarele operații:
 
   - modificarea fișierelor în dosarul de lucru;
-  - marcarea fișierelor la care ați lucrat. Această operație va pregăti o\ 
-captură a dosarului;
+  - marcarea fișierelor la care ați lucrat. Această operație va pregăti o 
+    captură a dosarului;
   - efectuarea unui commit a fișierelor marcate. Această operație va stoca 
-captura în depozitul Git.
+    captura în depozitul Git.
 
   
 Inițializarea depozitului de fișiere și setarea programului git
@@ -120,8 +120,8 @@ acestui tutorial.
 
 .. note:: Fiecare depozit trebuie să fie în propriul său dosar. Nu este permisă  
    crearea sau duplicarea de depozite git înăuntrul unui alt depozit git deja 
-existent, adică în dosarul sau subdosarule în care deja ați inițializat un 
-depozit git. 
+   existent, adică în dosarul sau subdosarule în care deja ați inițializat un 
+   depozit git. 
 
 Înainte de a purcede mai departe haideți să setăm git-ul. Va trebuie să faceți 
 acest lucru pentru fiecare calculator în parte::
